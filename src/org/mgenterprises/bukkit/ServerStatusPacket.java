@@ -29,6 +29,11 @@ public class ServerStatusPacket{
         this.data=parts[1];
     }
     
+    /**
+     * Host to send packet to
+     * @param address
+     * @return true if host exists
+     */
     public boolean setTargetHost(String address){
         try {
             this.targetHost=InetAddress.getByName(address);
@@ -43,30 +48,66 @@ public class ServerStatusPacket{
         this.Port=port;
     }
     
+    /**
+     * Type of data to send
+     * Example:   Payload.MAX_PLAYERS
+     * @param p 
+     */
     public void setPayload(Payload p){
         this.payload=p;
     }
     
+    /**
+     * Data related to the payload.
+     * Example: If payload if MAX_PLAYERS then this
+     * should be the max number of players the
+     * server will allow on
+     * @param data Data to be sent
+     */
     public void setData(String data){
         this.data=data;
     }
     
+    /**
+     * Data related to the payload.
+     * Example: If payload if MAX_PLAYERS then this
+     * should be the max number of players the
+     * server will allow on
+     * @return Data the packet contained
+     */
     public String getData(){
         return this.data;
     }
     
+    /**
+     * Get the type of data the packet contains
+     * @return 
+     */
     public Payload getPayload(){
         return this.payload;
     }
     
+    /**
+     * Who is this packet going to?
+     * @return Host to receive packet
+     */
     public InetAddress getTargetHost(){
         return this.targetHost;
     }
     
+    /**
+     * Port to use
+     * @return 
+     */
     public int getTargetPort(){
         return this.Port;
     }
     
+    /**
+     * Use this to convert the packet into something
+     * you can send with UDP.
+     * @return 
+     */
     @Override
     public String toString(){
         StringBuilder strFac = new StringBuilder();
