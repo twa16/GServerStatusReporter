@@ -1,38 +1,63 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package me.daneuz23;
 
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 /**
  *
  * @author Aaron Neuzil
  */
-public class ServerStatusSender extends JavaPlugin {
+
+public class ServerStatusSender extends JavaPlugin implements Listener {
         
+    @Override
 	public void onEnable(){
 		getLogger().info("onEnable has been invoked!");
-	}
- 
-	public void onDisable(){
-		getLogger().info("onDisable has been invoked!");
+        
 	}
         
-        public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args){
-             if (cmd.getName().equalsIgnoreCase("basic2")) {
-		if (!(sender instanceof Player)) {
-			sender.sendMessage("This command can only be run by a player.");
-		} else {
-			Player player = (Player) sender;
-			// do something
-		}
-		return true;
+        
+ 
+    @Override
+	public void onDisable(){
+		getLogger().info("onDisable has been invoked!");
+                         
 	}
-            return false;
+        
+public class UDPReceive {
+        
+        public void main(String args[]) {
+    
+            try {
+      int port = 1337;
 
-        }
+      DatagramSocket dsocket = new DatagramSocket(port);
+
+      byte[] buffer = new byte[2048];
+
+      DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
+
+      while (true) {
+        
+        dsocket.receive(packet);
+
+        String msg = new String(buffer, 0, packet.getLength());
+        System.out.println(packet.getAddress().getHostName() + ":"
+            + msg);
+
+        packet.setLength(buffer.length);
+      }
+    }catch (Exception e){
+      System.err.println(e);
+      
+    }
+  }         
+}          
 }
+          
+      
+
+           
+         
+     
